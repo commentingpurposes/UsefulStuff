@@ -1,3 +1,9 @@
+/*
+ * These are just a bunch of methods (mostly simple) that might come in handy every now and then.
+ * I have them all in this one class for convenience purposes.
+ * Feel free to suggest and/or add more methods if you think they can be useful.
+ */
+
 import java.util.List;
 import java.util.Stack;
 
@@ -10,6 +16,8 @@ public class UsefulMethods {
 		 * List<Integer> l = new ArrayList<Integer>(); l.add(5); l.add(4);
 		 * l.add(34); l.add(1); l.add(33); printList(l); bubbleSort(l);
 		 * printList(l);
+		 * 
+		 * System.out.println(factorial(6));
 		 * 
 		 * pascalsTriangle(5);
 		 * 
@@ -26,13 +34,18 @@ public class UsefulMethods {
 		 * System.out.print(b + " "); System.out.println(); }
 		 * 
 		 * System.out.println(gcd(100,12));
+		 * 
+		 * System.out.println(numCombinations("ABadsfgfxdC", 4));
+		 * 
+		 * primeValidity(83);
 		 */
+		
 	}
 
 	static int numCombinations(String s, int r) {
 		int num = 0;
 		int n = s.length();
-		// n! / r!(n-r)!
+		num = (factorial(n) / (factorial(r) * (factorial(n - r))));
 
 		return num;
 	}
@@ -40,7 +53,7 @@ public class UsefulMethods {
 	static int numPermutations(String s, int r) {
 		int num = 0;
 		int n = s.length();
-		// n! / (n-r)!
+		num = (factorial(n) / (factorial(n - r)));
 
 		return num;
 	}
@@ -73,8 +86,25 @@ public class UsefulMethods {
 		y = temp;
 	}
 
+	static void primeValidity(int n) {
+		boolean valid = true;
+		int divisor = 0;
+		for (int i = 2; i <= n / 2; i++)
+			if (n % i == 0) {
+				divisor = i;
+				valid = false;
+				break;
+			}
+
+		if (valid)
+			System.out.println("Your number is a valid prime number.");
+		else
+			System.out.println("Your number is not a valid prime number."
+					+ " It is divisible by " + divisor + ".");
+	}
+
 	static void expressionValidity(String s) {
-		Stack stack = new Stack();
+		Stack<Character> stack = new Stack<Character>();
 		boolean error = false;
 		for (char c : s.toCharArray()) {
 			if (c == '(' || c == '[')
@@ -183,6 +213,17 @@ public class UsefulMethods {
 			result = fibonacci(n - 1) + fibonacci(n - 2);
 
 		return result;
+	}
+
+	static int factorial(int n) {
+		if (n < 0)
+			return -1;
+		else {
+			if (n == 0 || n == 1)
+				return 1;
+			else
+				return n * factorial(n - 1);
+		}
 	}
 
 	static int sumPowersOf2(int n) {
