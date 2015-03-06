@@ -4,6 +4,8 @@
  * Feel free to suggest and/or add more methods if you think they can be useful.
  */
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -39,7 +41,15 @@ public class UsefulMethods {
 		 * 
 		 * primeValidity(83);
 		 */
-		
+		List<Integer> l = new ArrayList<Integer>();
+		l.add(5);
+		l.add(4);
+		l.add(34);
+		l.add(5);
+		l.add(1);
+		l.add(33);
+		printList(l);
+		bucketSort(l);
 	}
 
 	static int numCombinations(String s, int r) {
@@ -161,7 +171,54 @@ public class UsefulMethods {
 				}
 			}
 		}
-		System.out.println(l + "is sorted using bubble sort.");
+		System.out.println(l + " is sorted using bubble sort.");
+	}
+
+	static void insertionSort(List<Integer> l) {
+		for (int i = 1; i < l.size(); i++) {
+			int j = i;
+			while (j > 0 && l.get(j - 1) > l.get(j)) {
+				int temp = l.get(j - 1);
+				l.set(j - 1, l.get(j));
+				l.set(j, temp);
+				j--;
+			}
+		}
+		System.out.println(l + " is sorted using insertion sort.");
+	}
+
+	static void selectionSort(List<Integer> l) {
+		for (int i = 0; i < l.size() - 1; i++) {
+			int min = i;
+			for (int j = i; j < l.size(); j++) {
+				if (l.get(j) < l.get(min)) {
+					min = j;
+				}
+			}
+			int temp = l.get(i);
+			l.set(i, l.get(min));
+			l.set(min, temp);
+		}
+		System.out.println(l + " is sorted using insertion sort.");
+	}
+	
+	static void bucketSort(List<Integer> l){
+		int max = Collections.max(l);
+		int[] arr = new int[max+1];
+		int[] counters = new int[max+1];
+		for(int i = 0; i < l.size(); i++){
+			arr[l.get(i)] = l.get(i);
+			counters[l.get(i)]++;
+		}
+		List<Integer> newList = new ArrayList<Integer>();
+		for(int i : arr){
+			while(counters[i] > 0){
+				newList.add(arr[i]);
+				counters[i]--;
+			}
+		}
+		l = newList;
+		System.out.println(l + " is sorted using bucket sort.");
 	}
 
 	static void binarySearch(List<Integer> l, int item) {
