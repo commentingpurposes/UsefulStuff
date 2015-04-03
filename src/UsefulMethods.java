@@ -48,15 +48,18 @@ public class UsefulMethods {
 		 * bottomToTopMatrix(matrix);
 		 * 
 		 * int[] A = {1,2,4,5,7,8,9}; int[] B = {1,1,3,5,6};
-		 * mergeSortedArrays(A,B);
+		 * combineSortedArrays(A,B);
 		 * 
 		 * String s = "PNEUMONOULTRAMICROSCOPICSILICOVOLCANOCONIOSIS";
 		 * longestPalindrome(s);
 		 */
-		System.out.println("The final sent word is " + crc(10011, 1011) + ".\nThe remainder after modulo 2 division of the final sent word by the bias is "
-				+ moduloTwoDivision(crc(10011, 1011),1011) + ".");
-		boolean state = crcError(crc(10011, 1011),1011);
-		if(state)
+		System.out
+				.println("The final sent word is "
+						+ crc(1001011, 1101)
+						+ ".\nThe remainder after modulo 2 division of the final sent word by the bias is "
+						+ moduloTwoDivision(crc(1001011, 1101), 1101) + ".");
+		boolean state = crcError(crc(1001011, 1101), 1101);
+		if (state)
 			System.out.println("Error.");
 		else
 			System.out.println("No error.");
@@ -79,7 +82,7 @@ public class UsefulMethods {
 
 		String sentData = Integer.toString(data) + Integer.toString(remainder);
 		int result = Integer.parseInt(sentData);
-		
+
 		return result;
 	}
 
@@ -96,23 +99,23 @@ public class UsefulMethods {
 			r.add(c);
 			co++;
 		}
-		
+
 		while (counter < Integer.toString(bias).length()) {
 			ArrayList<Character> a = new ArrayList<Character>(r);
 			if (a.get(0) != '0') {
-				for (int i = Integer.toString(bias).length()-1; i > 0; i--) {
+				for (int i = Integer.toString(bias).length() - 1; i > 0; i--) {
 					if (a.get(i) == Integer.toString(bias).charAt(i)) {
-						r.set(i-1, '0');
+						r.set(i - 1, '0');
 					} else {
-						r.set(i-1, '1');
+						r.set(i - 1, '1');
 					}
 				}
-			} else{
-				for(int i = Integer.toString(bias).length()-1; i > 0; i--) {
-					r.set(i-1, a.get(i));
+			} else {
+				for (int i = Integer.toString(bias).length() - 1; i > 0; i--) {
+					r.set(i - 1, a.get(i));
 				}
 			}
-			r.set(Integer.toString(bias).length()-1,w.charAt(co));
+			r.set(Integer.toString(bias).length() - 1, w.charAt(co));
 			co++;
 			counter++;
 		}
@@ -154,7 +157,6 @@ public class UsefulMethods {
 	}
 
 	static void longestPalindrome(String s) {
-		System.out.println(System.currentTimeMillis());
 		String palindrome = "";
 		for (int i = 0; i < s.length(); i++) {
 			System.out.println(i);
@@ -181,7 +183,6 @@ public class UsefulMethods {
 		}
 		System.out.println("The longest palindrome within the given word (" + s
 				+ ") is: " + palindrome + ".");
-		System.out.println(System.currentTimeMillis());
 	}
 
 	public static boolean isPalindrome(String s) {
@@ -195,7 +196,7 @@ public class UsefulMethods {
 		return result;
 	}
 
-	static ArrayList<Integer> mergeSortedArrays(int[] A, int[] B) {
+	static ArrayList<Integer> combineSortedArrays(int[] A, int[] B) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		int i = 0;
 		int j = 0;
