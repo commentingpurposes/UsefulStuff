@@ -221,7 +221,7 @@ public class UsefulMethods {
 		return result;
 	}
 
-	static int[][] bottomToTopMatrix(int[][] matrix) {
+	static int[][] clockwiseRotatedMatrix(int[][] matrix) {
 		int size = matrix.length;
 		int result[][] = new int[size][size];
 		for (int i = 0; i < size; i++)
@@ -282,7 +282,7 @@ public class UsefulMethods {
 	static void primeValidity(int n) {
 		boolean valid = true;
 		int divisor = 0;
-		for (int i = 2; i <= n / 2; i++)
+		for (int i = 2; i <= Math.sqrt(n); i++)
 			if (n % i == 0) {
 				divisor = i;
 				valid = false;
