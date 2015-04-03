@@ -4,9 +4,12 @@
  * Feel free to suggest and/or add more methods if you think they can be useful.
  */
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
 
 public class UsefulMethods {
@@ -40,16 +43,195 @@ public class UsefulMethods {
 		 * System.out.println(numCombinations("ABadsfgfxdC", 4));
 		 * 
 		 * primeValidity(83);
+		 * 
+		 * int[][] matrix = {{1,2,3},{4,5,6},{7,8,9}};
+		 * bottomToTopMatrix(matrix);
+		 * 
+		 * int[] A = {1,2,4,5,7,8,9}; int[] B = {1,1,3,5,6};
+		 * mergeSortedArrays(A,B);
+		 * 
+		 * String s = "PNEUMONOULTRAMICROSCOPICSILICOVOLCANOCONIOSIS";
+		 * longestPalindrome(s);
 		 */
-		List<Integer> l = new ArrayList<Integer>();
-		l.add(5);
-		l.add(4);
-		l.add(34);
-		l.add(5);
-		l.add(1);
-		l.add(33);
-		printList(l);
-		bucketSort(l);
+		System.out.println("The final sent word is " + crc(10011, 1011) + ".\nThe remainder after modulo 2 division of the final sent word by the bias is "
+				+ moduloTwoDivision(crc(10011, 1011),1011) + ".");
+		boolean state = crcError(crc(10011, 1011),1011);
+		if(state)
+			System.out.println("Error.");
+		else
+			System.out.println("No error.");
+	}
+
+	static boolean crcError(int word, int bias) {
+		if (moduloTwoDivision(word, bias) != 0)
+			return true;
+		else
+			return false;
+	}
+
+	static int crc(int data, int bias) {
+		int c = Integer.toString(bias).length();
+		String newData = Integer.toString(data);
+		for (int i = 0; i < c - 1; i++)
+			newData += "0";
+		int dividend = Integer.parseInt(newData);
+		int remainder = moduloTwoDivision(dividend, bias);
+
+		String sentData = Integer.toString(data) + Integer.toString(remainder);
+		int result = Integer.parseInt(sentData);
+		
+		return result;
+	}
+
+	static int moduloTwoDivision(int word, int bias) {
+		String w = Integer.toString(word);
+		if (w.length() < Integer.toString(bias).length())
+			return -1;
+
+		int counter = 0;
+		int co = 0;
+		ArrayList<Character> r = new ArrayList<Character>();
+		String current = w.substring(0, Integer.toString(bias).length());
+		for (char c : current.toCharArray()) {
+			r.add(c);
+			co++;
+		}
+		
+		while (counter < Integer.toString(bias).length()) {
+			ArrayList<Character> a = new ArrayList<Character>(r);
+			if (a.get(0) != '0') {
+				for (int i = Integer.toString(bias).length()-1; i > 0; i--) {
+					if (a.get(i) == Integer.toString(bias).charAt(i)) {
+						r.set(i-1, '0');
+					} else {
+						r.set(i-1, '1');
+					}
+				}
+			} else{
+				for(int i = Integer.toString(bias).length()-1; i > 0; i--) {
+					r.set(i-1, a.get(i));
+				}
+			}
+			r.set(Integer.toString(bias).length()-1,w.charAt(co));
+			co++;
+			counter++;
+		}
+		String finalS = "";
+		for (char c : r)
+			finalS += c;
+
+		int remainder = Integer.parseInt(finalS);
+
+		return remainder;
+
+	}
+
+	static void shortestPath(int x, int y) throws FileNotFoundException {
+		File file = new File("adjacency_matrix.txt");
+		Scanner scan = new Scanner(file);
+
+		int numNodes = scan.nextInt();
+		int[][] adjMatrix = new int[numNodes][numNodes];
+		while (scan.hasNextLine()) {
+			int start = scan.nextInt();
+			int end = scan.nextInt();
+			int weight = scan.nextInt();
+			adjMatrix[start][end] = weight;
+			adjMatrix[start][end] = weight;
+		}
+	}
+
+	static void getShortestPath(int[][] matrix, int idx1, int idx2,
+			int destination) {
+		int shortest = 0;
+		if (matrix[idx1][idx2] != 0) {
+			shortest += matrix[idx1][idx2];
+			while (idx2 != destination) {
+				// get unvisited adjacent nodes
+
+			}
+		}
+	}
+
+	static void longestPalindrome(String s) {
+		System.out.println(System.currentTimeMillis());
+		String palindrome = "";
+		for (int i = 0; i < s.length(); i++) {
+			System.out.println(i);
+			int j = 1;
+			while (i + j < s.length() && s.charAt(i + j) == s.charAt(i)) {
+				if (j + 1 >= palindrome.length()) {
+					palindrome = s.substring(i, i + j + 1);
+				}
+				j++;
+			}
+			int c = 1;
+			while (i - c >= 0 && i + j - 1 < s.length()) {
+				if (i + j + 1 < s.length()
+						&& isPalindrome(s.substring(i - c, i + j + 1))
+						&& c + j + 2 >= palindrome.length()) {
+					palindrome = s.substring(i - c, i + j + 1);
+				} else if (isPalindrome(s.substring(i - c))
+						&& c + j + 2 >= palindrome.length()) {
+					palindrome = s.substring(i - c, i + j + 1);
+				}
+				c++;
+				j++;
+			}
+		}
+		System.out.println("The longest palindrome within the given word (" + s
+				+ ") is: " + palindrome + ".");
+		System.out.println(System.currentTimeMillis());
+	}
+
+	public static boolean isPalindrome(String s) {
+		boolean result = false;
+		String r = "";
+		for (int i = s.length() - 1; i >= 0; i--) {
+			r += s.charAt(i);
+		}
+		if (s.equals(r))
+			result = true;
+		return result;
+	}
+
+	static ArrayList<Integer> mergeSortedArrays(int[] A, int[] B) {
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		int i = 0;
+		int j = 0;
+		while (i < A.length && j < B.length) {
+			if (A[i] <= B[j]) {
+				result.add(A[i]);
+				i++;
+			} else {
+				result.add(B[j]);
+				j++;
+			}
+		}
+		while (i < A.length) {
+			result.add(A[i]);
+			i++;
+		}
+		while (j < B.length) {
+			result.add(B[j]);
+			j++;
+		}
+		System.out.println(result);
+		return result;
+	}
+
+	static int[][] bottomToTopMatrix(int[][] matrix) {
+		int size = matrix.length;
+		int result[][] = new int[size][size];
+		for (int i = 0; i < size; i++)
+			for (int j = 0; j < size; j++)
+				result[i][j] = matrix[size - j - 1][i];
+		for (int[] a : result) {
+			for (int b : a)
+				System.out.print(b + " ");
+			System.out.println();
+		}
+		return result;
 	}
 
 	static int numCombinations(String s, int r) {
@@ -201,18 +383,18 @@ public class UsefulMethods {
 		}
 		System.out.println(l + " is sorted using insertion sort.");
 	}
-	
-	static void bucketSort(List<Integer> l){
+
+	static void bucketSort(List<Integer> l) {
 		int max = Collections.max(l);
-		int[] arr = new int[max+1];
-		int[] counters = new int[max+1];
-		for(int i = 0; i < l.size(); i++){
+		int[] arr = new int[max + 1];
+		int[] counters = new int[max + 1];
+		for (int i = 0; i < l.size(); i++) {
 			arr[l.get(i)] = l.get(i);
 			counters[l.get(i)]++;
 		}
 		List<Integer> newList = new ArrayList<Integer>();
-		for(int i : arr){
-			while(counters[i] > 0){
+		for (int i : arr) {
+			while (counters[i] > 0) {
 				newList.add(arr[i]);
 				counters[i]--;
 			}
