@@ -45,28 +45,24 @@ public class UsefulMethods {
 		 * primeValidity(83);
 		 * 
 		 * int[][] matrix = {{1,2,3},{4,5,6},{7,8,9}};
-		 * bottomToTopMatrix(matrix);
+		 * clockwiseRotatedMatrix(matrix);
 		 * 
 		 * int[] A = {1,2,4,5,7,8,9}; int[] B = {1,1,3,5,6};
 		 * combineSortedArrays(A,B);
 		 * 
 		 * String s = "PNEUMONOULTRAMICROSCOPICSILICOVOLCANOCONIOSIS";
 		 * longestPalindrome(s);
+		 * 
+		 * System.out .println("The final sent word is " + crc(101101, 1101) +
+		 * ".\nThe remainder after modulo 2 division of the final sent word by the bias is "
+		 * + moduloTwoDivisionRemainder(crc(101101, 1101), 1101) + "."); boolean
+		 * state = crcError(crc(10011, 1011), 1011); if (state)
+		 * System.out.println("Error."); else System.out.println("No error.");
 		 */
-		System.out
-				.println("The final sent word is "
-						+ crc(1001011, 1101)
-						+ ".\nThe remainder after modulo 2 division of the final sent word by the bias is "
-						+ moduloTwoDivision(crc(1001011, 1101), 1101) + ".");
-		boolean state = crcError(crc(1001011, 1101), 1101);
-		if (state)
-			System.out.println("Error.");
-		else
-			System.out.println("No error.");
 	}
 
 	static boolean crcError(int word, int bias) {
-		if (moduloTwoDivision(word, bias) != 0)
+		if (Integer.parseInt(moduloTwoDivisionRemainder(word, bias)) != 0)
 			return true;
 		else
 			return false;
@@ -78,32 +74,36 @@ public class UsefulMethods {
 		for (int i = 0; i < c - 1; i++)
 			newData += "0";
 		int dividend = Integer.parseInt(newData);
-		int remainder = moduloTwoDivision(dividend, bias);
+		String remainder = moduloTwoDivisionRemainder(dividend, bias);
 
-		String sentData = Integer.toString(data) + Integer.toString(remainder);
+		String sentData = Integer.toString(data) + remainder;
 		int result = Integer.parseInt(sentData);
 
 		return result;
 	}
 
-	static int moduloTwoDivision(int word, int bias) {
+	static String moduloTwoDivisionRemainder(int word, int bias) {
+		int biasLength = Integer.toString(bias).length();
+		int wordLength = Integer.toString(word).length();
 		String w = Integer.toString(word);
-		if (w.length() < Integer.toString(bias).length())
-			return -1;
+		if (w.length() < biasLength) {
+			System.out.println("Invalid .. Bias cannot be longer than word.");
+			return null;
+		}
 
 		int counter = 0;
 		int co = 0;
 		ArrayList<Character> r = new ArrayList<Character>();
-		String current = w.substring(0, Integer.toString(bias).length());
+		String current = w.substring(0, biasLength);
 		for (char c : current.toCharArray()) {
 			r.add(c);
 			co++;
 		}
 
-		while (counter < Integer.toString(bias).length()) {
+		while (counter < wordLength - biasLength) {
 			ArrayList<Character> a = new ArrayList<Character>(r);
 			if (a.get(0) != '0') {
-				for (int i = Integer.toString(bias).length() - 1; i > 0; i--) {
+				for (int i = biasLength - 1; i > 0; i--) {
 					if (a.get(i) == Integer.toString(bias).charAt(i)) {
 						r.set(i - 1, '0');
 					} else {
@@ -111,19 +111,17 @@ public class UsefulMethods {
 					}
 				}
 			} else {
-				for (int i = Integer.toString(bias).length() - 1; i > 0; i--) {
+				for (int i = biasLength - 1; i > 0; i--) {
 					r.set(i - 1, a.get(i));
 				}
 			}
-			r.set(Integer.toString(bias).length() - 1, w.charAt(co));
+			r.set(biasLength - 1, w.charAt(co));
 			co++;
 			counter++;
 		}
-		String finalS = "";
-		for (char c : r)
-			finalS += c;
-
-		int remainder = Integer.parseInt(finalS);
+		String remainder = "";
+		for (int i = 1; i < r.size(); i++)
+			remainder += r.get(i);
 
 		return remainder;
 
@@ -339,6 +337,18 @@ public class UsefulMethods {
 			}
 		}
 		printList(a);
+	}
+
+	static void mergeSort(List<Integer> l) {
+
+	}
+
+	static void quickSort(List<Integer> l) {
+
+	}
+
+	static void shellSort(List<Integer> l) {
+
 	}
 
 	static void bubbleSort(List<Integer> l) {
