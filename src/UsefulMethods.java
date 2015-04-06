@@ -44,11 +44,15 @@ public class UsefulMethods {
 		 * 
 		 * primeValidity(83);
 		 * 
+		 * List<Integer> l = new ArrayList<Integer>(); l.add(5); l.add(12);
+		 * l.add(3); l.add(7); l.add(4); l.add(-1); l.add(1); l.add(23);
+		 * l.add(12); mergeSort(l);
+		 * 
 		 * int[][] matrix = {{1,2,3},{4,5,6},{7,8,9}};
 		 * clockwiseRotatedMatrix(matrix);
 		 * 
-		 * int[] A = {1,2,4,5,7,8,9}; int[] B = {1,1,3,5,6};
-		 * combineSortedArrays(A,B);
+		 * int[] A = { 1, 2, 4, 5, 7, 8, 9, 18 }; int[] B = { -14, 0, 1, 1, 3,
+		 * 5, 6, 33 }; combineSortedArrays(A, B);
 		 * 
 		 * String s = "PNEUMONOULTRAMICROSCOPICSILICOVOLCANOCONIOSIS";
 		 * longestPalindrome(s);
@@ -59,6 +63,7 @@ public class UsefulMethods {
 		 * state = crcError(crc(10011, 1011), 1011); if (state)
 		 * System.out.println("Error."); else System.out.println("No error.");
 		 */
+
 	}
 
 	static boolean crcError(int word, int bias) {
@@ -194,25 +199,56 @@ public class UsefulMethods {
 		return result;
 	}
 
-	static ArrayList<Integer> combineSortedArrays(int[] A, int[] B) {
-		ArrayList<Integer> result = new ArrayList<Integer>();
+	static int[] combineSortedArrays(int[] A, int[] B) {
+		int[] result = new int[A.length + B.length];
 		int i = 0;
 		int j = 0;
+		int counter = 0;
 		while (i < A.length && j < B.length) {
 			if (A[i] <= B[j]) {
-				result.add(A[i]);
+				result[counter] = A[i];
+				counter++;
 				i++;
 			} else {
-				result.add(B[j]);
+				result[counter] = B[j];
+				counter++;
 				j++;
 			}
 		}
 		while (i < A.length) {
-			result.add(A[i]);
+			result[counter] = A[i];
+			counter++;
 			i++;
 		}
 		while (j < B.length) {
-			result.add(B[j]);
+			result[counter] = B[j];
+			counter++;
+			j++;
+		}
+		printArray(result);
+		return result;
+	}
+
+	static ArrayList<Integer> combineSortedLists(List<Integer> A,
+			List<Integer> B) {
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		int i = 0;
+		int j = 0;
+		while (i < A.size() && j < B.size()) {
+			if (A.get(i) <= B.get(j)) {
+				result.add(A.get(i));
+				i++;
+			} else {
+				result.add(B.get(j));
+				j++;
+			}
+		}
+		while (i < A.size()) {
+			result.add(A.get(i));
+			i++;
+		}
+		while (j < B.size()) {
+			result.add(B.get(j));
 			j++;
 		}
 		System.out.println(result);
@@ -336,11 +372,24 @@ public class UsefulMethods {
 					a[i][j] = a[i - 1][j - 1] + a[i - 1][j];
 			}
 		}
-		printList(a);
+		print2DArray(a);
 	}
 
-	static void mergeSort(List<Integer> l) {
+	static ArrayList<Integer> merge(List<Integer> a, List<Integer> b) {
+		return combineSortedLists(a, b);
+	}
 
+	static List<Integer> mergeSort(List<Integer> l) {
+		if (l.size() == 1) {
+			return l;
+		} else {
+			int middle = l.size() / 2;
+			List<Integer> left = mergeSort(l.subList(0, middle));
+			List<Integer> right = mergeSort(l.subList(middle, l.size()));
+			ArrayList<Integer> result = merge(left, right);
+			System.out.println(result);
+			return result;
+		}
 	}
 
 	static void quickSort(List<Integer> l) {
@@ -494,11 +543,18 @@ public class UsefulMethods {
 		System.out.println();
 	}
 
-	static void printList(int[][] a) {
+	static void print2DArray(int[][] a) {
 		for (int[] i : a) {
 			for (int j : i)
 				System.out.print(j + " ");
 			System.out.println();
+		}
+		System.out.println();
+	}
+
+	static void printArray(int[] a) {
+		for (int i : a) {
+			System.out.print(i + " ");
 		}
 		System.out.println();
 	}
