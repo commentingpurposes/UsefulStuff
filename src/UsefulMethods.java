@@ -7,6 +7,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -63,7 +64,19 @@ public class UsefulMethods {
 		 * state = crcError(crc(10011, 1011), 1011); if (state)
 		 * System.out.println("Error."); else System.out.println("No error.");
 		 */
-
+		List<Integer> l = new ArrayList<Integer>();
+		l.add(5);
+		l.add(12);
+		l.add(3);
+		l.add(7);
+		l.add(4);
+		l.add(23);
+		l.add(3);
+		l.add(-3);
+		l.add(24);
+		l.add(12);
+		l.add(35);
+		shellSort(l);
 	}
 
 	static boolean crcError(int word, int bias) {
@@ -397,7 +410,44 @@ public class UsefulMethods {
 	}
 
 	static void shellSort(List<Integer> l) {
-
+		int count = 1;
+		int c = 0;
+		int k = l.size() / 2;
+		int forgotten = -1;
+		boolean boo = false;
+		if (l.size() % 2 == 1) {
+			forgotten = l.get(l.size() - 1);
+			boo = true;
+		}
+		int numRepeats = (int) (Math.log(l.size()) / Math.log(2));
+		while (count < numRepeats) {
+			System.out.println(k);
+			Integer[][] colArrays = new Integer[k][l.size() / k];
+			for (int i = 0; i < k; i++) {
+				for (int j = 0; j < colArrays[i].length; j++) {
+					colArrays[i][j] = l.get(i + c);
+					c += k;
+				}
+				c = 0;
+			}
+			l = new ArrayList<Integer>();
+			for (Integer[] a : colArrays) {
+				printArray(a);
+				insertionSort(Arrays.asList(a));
+				for (int b : a) {
+					l.add(b);
+				}
+			}
+			k = (int) Math.ceil(k / 2);
+			count++;
+			System.out.println(l);
+		}
+		if (boo) {
+			l.add(forgotten);
+		}
+		;
+		insertionSort(l);
+		System.out.println(l);
 	}
 
 	static void bubbleSort(List<Integer> l) {
@@ -413,7 +463,6 @@ public class UsefulMethods {
 				}
 			}
 		}
-		System.out.println(l + " is sorted using bubble sort.");
 	}
 
 	static void insertionSort(List<Integer> l) {
@@ -426,7 +475,6 @@ public class UsefulMethods {
 				j--;
 			}
 		}
-		System.out.println(l + " is sorted using insertion sort.");
 	}
 
 	static void selectionSort(List<Integer> l) {
@@ -441,7 +489,6 @@ public class UsefulMethods {
 			l.set(i, l.get(min));
 			l.set(min, temp);
 		}
-		System.out.println(l + " is sorted using insertion sort.");
 	}
 
 	static void bucketSort(List<Integer> l) {
@@ -460,7 +507,6 @@ public class UsefulMethods {
 			}
 		}
 		l = newList;
-		System.out.println(l + " is sorted using bucket sort.");
 	}
 
 	static void binarySearch(List<Integer> l, int item) {
@@ -553,6 +599,13 @@ public class UsefulMethods {
 	}
 
 	static void printArray(int[] a) {
+		for (int i : a) {
+			System.out.print(i + " ");
+		}
+		System.out.println();
+	}
+
+	static void printArray(Integer[] a) {
 		for (int i : a) {
 			System.out.print(i + " ");
 		}
