@@ -75,8 +75,10 @@ public class UsefulMethods {
 		l.add(-3);
 		l.add(24);
 		l.add(12);
+		l.add(56);
+		l.add(34);
 		l.add(35);
-		shellSort(l);
+		heapSort(l);
 	}
 
 	static boolean crcError(int word, int bias) {
@@ -405,8 +407,129 @@ public class UsefulMethods {
 		}
 	}
 
-	static void quickSort(List<Integer> l) {
+	static int medianOfThree(int a[], int f, int l) {
+		int m = (f + l) / 2;
+		if (a[f] < a[m]) {
+			if (a[f] >= a[l])
+				return a[f];
+			else if (a[m] < a[l])
+				return a[m];
+		} else {
+			if (a[f] < a[l])
+				return a[f];
+			else if (a[m] >= a[l])
+				return a[m];
+		}
+		return a[l];
+	}
 
+	static int medianOfThree(List<Integer> list, int f, int l) {
+		int m = (f + l) / 2;
+		if (list.get(f) < list.get(m)) {
+			if (list.get(f) >= list.get(l))
+				return list.get(f);
+			else if (list.get(m) < list.get(l))
+				return list.get(m);
+		} else {
+			if (list.get(f) < list.get(l))
+				return list.get(f);
+			else if (list.get(m) >= list.get(l))
+				return list.get(m);
+		}
+		return list.get(l);
+	}
+
+	static void quickSort(List<Integer> l) {
+		int pivot = medianOfThree(l, 0, l.size());
+		int temp = l.get(0);
+		l.set(0, pivot);
+		l.set(l.indexOf(pivot), temp);
+		// ////////////
+	}
+
+	static void heapSort(List<Integer> l) {
+		int size = l.size();
+		int current = l.size();
+		int temp, i, left, right, bigger = 0;
+		l.add(0, Integer.MIN_VALUE);
+		// heapify
+		int swapIndex = 0;
+		while (current > 1) {
+			right = l.get(current);
+			left = l.get(current - 1);
+			bigger = 0;
+			if (right >= left) {
+				bigger = right;
+				swapIndex = current;
+			} else {
+				bigger = left;
+				swapIndex = current - 1;
+			}
+			if (bigger > l.get(current / 2)) {
+				temp = l.get(current / 2);
+				l.set(current / 2, l.get(swapIndex));
+				l.set(swapIndex, temp);
+
+				// go back down the tree
+				i = swapIndex * 2;
+				while (i < l.size()) {
+					left = l.get(i);
+					right = l.get(i + 1);
+					if (right >= left) {
+						bigger = right;
+						swapIndex = i + 1;
+					} else {
+						bigger = left;
+						swapIndex = i;
+					}
+					if (bigger > l.get(swapIndex / 2)) {
+						temp = l.get(swapIndex / 2);
+						l.set(swapIndex / 2, l.get(swapIndex));
+						l.set(swapIndex, temp);
+					}
+					i = swapIndex * 2;
+				}
+			}
+			current -= 2;
+		}
+		System.out.println(l);
+
+		// position
+		int maxIndex = l.size() - 1;
+		while (maxIndex > 1) {
+			temp = l.get(1);
+			l.set(1, l.get(maxIndex));
+			l.set(maxIndex, temp);
+
+			// adjust
+			current = 1;
+			i = current * 2;
+			System.out.println("maxIndex" + maxIndex);
+			while (i < maxIndex - 1) {
+				System.out.println(i);
+				left = l.get(i);
+				if (i + 1 < maxIndex - 1) {
+					right = l.get(i + 1);
+					if (right >= left) {
+						bigger = right;
+						swapIndex = i + 1;
+					} else {
+						bigger = left;
+						swapIndex = i;
+					}
+				}
+				System.out.println("bigger" + bigger);
+				if (bigger > l.get(swapIndex / 2)) {
+					temp = l.get(swapIndex / 2);
+					l.set(swapIndex / 2, l.get(swapIndex));
+					l.set(swapIndex, temp);
+				}
+				i = swapIndex * 2;
+			}
+			System.out.println("out");
+			maxIndex--;
+		}
+		System.out.println(l);
 	}
 
 	static void shellSort(List<Integer> l) {
