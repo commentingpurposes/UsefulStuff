@@ -16,54 +16,7 @@ import java.util.Stack;
 public class UsefulMethods {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		/*
-		 * List<Integer> l = new ArrayList<Integer>(); l.add(5); l.add(4);
-		 * l.add(34); l.add(1); l.add(33); printList(l); bubbleSort(l);
-		 * printList(l);
-		 * 
-		 * System.out.println(factorial(6));
-		 * 
-		 * pascalsTriangle(5);
-		 * 
-		 * List<String> l = new ArrayList<String>(); l.add("Saliou");
-		 * l.add("Sup"); l.add("neyney");
-		 * 
-		 * binarySearch(l, "Sup");
-		 * 
-		 * expressionValidity("[()()][");
-		 * 
-		 * int[][] m = {{1,2},{0,1},{4,3}};
-		 * 
-		 * m = transposeMatrix(m); for(int[] a : m){ for(int b : a)
-		 * System.out.print(b + " "); System.out.println(); }
-		 * 
-		 * System.out.println(gcd(100,12));
-		 * 
-		 * System.out.println(numCombinations("ABadsfgfxdC", 4));
-		 * 
-		 * primeValidity(83);
-		 * 
-		 * List<Integer> l = new ArrayList<Integer>(); l.add(5); l.add(12);
-		 * l.add(3); l.add(7); l.add(4); l.add(-1); l.add(1); l.add(23);
-		 * l.add(12); mergeSort(l);
-		 * 
-		 * int[][] matrix = {{1,2,3},{4,5,6},{7,8,9}};
-		 * clockwiseRotatedMatrix(matrix);
-		 * 
-		 * int[] A = { 1, 2, 4, 5, 7, 8, 9, 18 }; int[] B = { -14, 0, 1, 1, 3,
-		 * 5, 6, 33 }; combineSortedArrays(A, B);
-		 * 
-		 * String s = "PNEUMONOULTRAMICROSCOPICSILICOVOLCANOCONIOSIS";
-		 * longestPalindrome(s);
-		 * 
-		 * System.out .println("The final sent word is " + crc(101101, 1101) +
-		 * ".\nThe remainder after modulo 2 division of the final sent word by the bias is "
-		 * + moduloTwoDivisionRemainder(crc(101101, 1101), 1101) + "."); boolean
-		 * state = crcError(crc(10011, 1011), 1011); if (state)
-		 * System.out.println("Error."); else System.out.println("No error.");
-		 */
+		
 		List<Integer> l = new ArrayList<Integer>();
 		l.add(5);
 		l.add(12);
@@ -78,9 +31,19 @@ public class UsefulMethods {
 		l.add(56);
 		l.add(34);
 		l.add(35);
-		heapSort(l);
+		l.add(12);
+		//shellSort(l);
+		int[][] a = {{1,2,3},{4,5,6},{7,8,9}};
+		System.out.println(clockwiseRotatedMatrix(a));
+		
+		//NEED TO FIX SHELL, HEAP, AND QUICK SORTS
+		//
+		//NEED TO FIX SHORTEST PATH METHOD
 	}
 
+	/*
+	 * Find whether there is an error or not after crc method given a word and a bias modulo 2 divisor.
+	 */
 	static boolean crcError(int word, int bias) {
 		if (Integer.parseInt(moduloTwoDivisionRemainder(word, bias)) != 0)
 			return true;
@@ -88,29 +51,50 @@ public class UsefulMethods {
 			return false;
 	}
 
+	/*
+	 * Takes data bits and bias and returns sent word using modulo 2 division remainder.
+	 * This remainder is appended to the original data bits; the new expression is the sent word.
+	 */
 	static int crc(int data, int bias) {
 		int c = Integer.toString(bias).length();
 		String newData = Integer.toString(data);
+		
+		/*
+		 * Let n be the number of bits in 'bias', append n-1 '0' bits to the data before performing mod 2 division.
+		 */
 		for (int i = 0; i < c - 1; i++)
 			newData += "0";
 		int dividend = Integer.parseInt(newData);
+		
 		String remainder = moduloTwoDivisionRemainder(dividend, bias);
 
+		/*
+		 * Append obtained result after mod 2 division to original data bits, then return.
+		 */
 		String sentData = Integer.toString(data) + remainder;
 		int result = Integer.parseInt(sentData);
 
 		return result;
 	}
 
+	/*
+	 * This method performs mod 2 division.
+	 * First parameter it takes is the dividend; the second is the divisor.
+	 */
 	static String moduloTwoDivisionRemainder(int word, int bias) {
 		int biasLength = Integer.toString(bias).length();
 		int wordLength = Integer.toString(word).length();
 		String w = Integer.toString(word);
+		
+		/*
+		 * It would not make sense for the divisor to have more bits than the dividend.
+		 */
 		if (w.length() < biasLength) {
 			System.out.println("Invalid .. Bias cannot be longer than word.");
 			return null;
 		}
 
+		//RESUME COMMENTS FROM HERE
 		int counter = 0;
 		int co = 0;
 		ArrayList<Character> r = new ArrayList<Character>();
@@ -120,6 +104,7 @@ public class UsefulMethods {
 			co++;
 		}
 
+		
 		while (counter < wordLength - biasLength) {
 			ArrayList<Character> a = new ArrayList<Character>(r);
 			if (a.get(0) != '0') {
@@ -174,6 +159,9 @@ public class UsefulMethods {
 		}
 	}
 
+	/*
+	 * This is a method that will return the longest palindrome found within a given string.
+	 */
 	static void longestPalindrome(String s) {
 		String palindrome = "";
 		for (int i = 0; i < s.length(); i++) {
@@ -203,6 +191,9 @@ public class UsefulMethods {
 				+ ") is: " + palindrome + ".");
 	}
 
+	/*
+	 * Find whether or not a given string is a palindrome.
+	 */
 	public static boolean isPalindrome(String s) {
 		boolean result = false;
 		String r = "";
@@ -214,6 +205,11 @@ public class UsefulMethods {
 		return result;
 	}
 
+	/*
+	 * This method will combine sorted arrays.
+	 * This means that it will take two sorted arrays; then it will combine and sort them.
+	 * It results in a longer, but still sorted array.
+	 */
 	static int[] combineSortedArrays(int[] A, int[] B) {
 		int[] result = new int[A.length + B.length];
 		int i = 0;
@@ -244,6 +240,11 @@ public class UsefulMethods {
 		return result;
 	}
 
+	/*
+	 * This method will combine sorted lists.
+	 * This means that it will take two sorted lists; then it will combine and sort them.
+	 * It results in a longer, but still sorted list.
+	 */
 	static ArrayList<Integer> combineSortedLists(List<Integer> A,
 			List<Integer> B) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
@@ -270,6 +271,13 @@ public class UsefulMethods {
 		return result;
 	}
 
+	/*
+	 * Rotate a 2D matrix clockwise.
+	 * Example:
+	 * 		1	2	3		=>		7	4	1
+	 * 		4	5	6		=>		8	5	2
+	 * 		7	8	9		=>		9	6	3
+	 */
 	static int[][] clockwiseRotatedMatrix(int[][] matrix) {
 		int size = matrix.length;
 		int result[][] = new int[size][size];
@@ -284,6 +292,11 @@ public class UsefulMethods {
 		return result;
 	}
 
+	/*
+	 * This method determines how many combinations are possible given a total number of characters
+	 * and how many characters is wanted for each combination.
+	 * Combination is different from permutation in that different combinations cannot comprise of only the same characters.
+	 */
 	static int numCombinations(String s, int r) {
 		int num = 0;
 		int n = s.length();
@@ -292,6 +305,12 @@ public class UsefulMethods {
 		return num;
 	}
 
+	/*
+	 * This method determines how many permutations are possible given a total number of characters
+	 * and how many characters is wanted for each permutation.
+	 * Permutation is different from combination in that different permutations can comprise of the same characters
+	 * which are not in the same order.
+	 */
 	static int numPermutations(String s, int r) {
 		int num = 0;
 		int n = s.length();
@@ -300,6 +319,9 @@ public class UsefulMethods {
 		return num;
 	}
 
+	/*
+	 * This method determines the greatest common denominator between two numbers.
+	 */
 	static int gcd(int a, int b) {
 		while (b != 0) {
 			int temp = b;
@@ -309,6 +331,9 @@ public class UsefulMethods {
 		return a;
 	}
 
+	/*
+	 * This method will return the transpose of a given 2D matrix.
+	 */
 	static int[][] transposeMatrix(int[][] matrix) {
 		int numCols = matrix.length;
 		int numRows = matrix[0].length;
@@ -322,12 +347,18 @@ public class UsefulMethods {
 		return matrix;
 	}
 
+	/*
+	 * The following simple method is to illustrate the swapping of two items.
+	 */
 	static void swap(int x, int y) {
 		int temp = x;
 		x = y;
 		y = temp;
 	}
 
+	/*
+	 * The following method checks whether or not a given number is a prime number.
+	 */
 	static void primeValidity(int n) {
 		boolean valid = true;
 		int divisor = 0;
@@ -345,6 +376,10 @@ public class UsefulMethods {
 					+ " It is divisible by " + divisor + ".");
 	}
 
+	/*
+	 * This method checks for the validity of a given string.
+	 * It checks whther or not the parentheses and brackets come in pairs and are at the right place.
+	 */
 	static void expressionValidity(String s) {
 		Stack<Character> stack = new Stack<Character>();
 		boolean error = false;
@@ -377,6 +412,9 @@ public class UsefulMethods {
 		}
 	}
 
+	/*
+	 * This method will output Pascal's Triangle up to the nth line (n is provided).
+	 */
 	static void pascalsTriangle(int n) {
 		int[][] a = new int[n][n];
 		for (int i = 0; i < n; i++) {
@@ -390,10 +428,16 @@ public class UsefulMethods {
 		print2DArray(a);
 	}
 
+	/*
+	 * This method merges two lists; it simply uses the method to merge lists above.
+	 */
 	static ArrayList<Integer> merge(List<Integer> a, List<Integer> b) {
 		return combineSortedLists(a, b);
 	}
 
+	/*
+	 * Sotr list using merge sort.
+	 */
 	static List<Integer> mergeSort(List<Integer> l) {
 		if (l.size() == 1) {
 			return l;
@@ -406,7 +450,10 @@ public class UsefulMethods {
 			return result;
 		}
 	}
-
+	
+	/*
+	 * Find the median of three of an array, the three numbers being the ones at first, middle, and last indices of the array.
+	 */
 	static int medianOfThree(int a[], int f, int l) {
 		int m = (f + l) / 2;
 		if (a[f] < a[m]) {
@@ -422,7 +469,10 @@ public class UsefulMethods {
 		}
 		return a[l];
 	}
-
+	
+	/*
+	 * Find the median of three of a list, the three numbers being the ones at first, middle, and last indices of the list.
+	 */
 	static int medianOfThree(List<Integer> list, int f, int l) {
 		int m = (f + l) / 2;
 		if (list.get(f) < list.get(m)) {
@@ -529,6 +579,7 @@ public class UsefulMethods {
 			System.out.println("out");
 			maxIndex--;
 		}
+		l.remove(0);
 		System.out.println(l);
 	}
 
@@ -573,6 +624,9 @@ public class UsefulMethods {
 		System.out.println(l);
 	}
 
+	/*
+	 * Sort list using bubble sort.
+	 */
 	static void bubbleSort(List<Integer> l) {
 		boolean swapped = true;
 		for (int i = l.size() - 1; swapped && i >= 1; i--) {
@@ -588,6 +642,9 @@ public class UsefulMethods {
 		}
 	}
 
+	/*
+	 * Sort list using insertion sort.
+	 */
 	static void insertionSort(List<Integer> l) {
 		for (int i = 1; i < l.size(); i++) {
 			int j = i;
@@ -600,6 +657,9 @@ public class UsefulMethods {
 		}
 	}
 
+	/*
+	 * Sort list using selection sort.
+	 */
 	static void selectionSort(List<Integer> l) {
 		for (int i = 0; i < l.size() - 1; i++) {
 			int min = i;
@@ -614,6 +674,9 @@ public class UsefulMethods {
 		}
 	}
 
+	/*
+	 * Sort list using bucket sort.
+	 */
 	static void bucketSort(List<Integer> l) {
 		int max = Collections.max(l);
 		int[] arr = new int[max + 1];
@@ -632,6 +695,9 @@ public class UsefulMethods {
 		l = newList;
 	}
 
+	/*
+	 * Look for an element in a list using binary search.
+	 */
 	static void binarySearch(List<Integer> l, int item) {
 		bubbleSort(l);
 		int a = 0;
@@ -650,6 +716,9 @@ public class UsefulMethods {
 			System.out.println(item + " is not in the list " + l + ".");
 	}
 
+	/*
+	 * Look for an element in a list using linear search.
+	 */
 	static void linearSearch(List<String> l, String item) {
 		boolean found = false;
 		for (String element : l) {
@@ -663,6 +732,9 @@ public class UsefulMethods {
 			System.out.println("Did not find " + item + " in " + l + ".");
 	}
 
+	/*
+	 * Recursive method to solve the Towers of Hanoi problem.
+	 */
 	static void towersOfHanoi(int n, int x, int y, int z) {
 		if (n > 0) {
 			towersOfHanoi(n - 1, x, z, y);
@@ -672,6 +744,9 @@ public class UsefulMethods {
 		}
 	}
 
+	/*
+	 * Recursive method to find the fibonacci of the nth number.
+	 */
 	static int fibonacci(int n) {
 		int result = 0;
 
@@ -683,6 +758,9 @@ public class UsefulMethods {
 		return result;
 	}
 
+	/*
+	 * Recursive method to find the factorial of a number.
+	 */
 	static int factorial(int n) {
 		if (n < 0)
 			return -1;
@@ -694,6 +772,10 @@ public class UsefulMethods {
 		}
 	}
 
+	/*
+	 * This method will sum powers of 2 up to the nth power
+	 * Example: n = 2 => 2^0 + 2^1 + 2^2
+	 */
 	static int sumPowersOf2(int n) {
 		int x = 1;
 		int p = 1;
