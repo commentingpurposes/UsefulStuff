@@ -15,32 +15,6 @@ import java.util.Stack;
 
 public class UsefulMethods {
 
-	public static void main(String[] args) {
-		
-		List<Integer> l = new ArrayList<Integer>();
-		l.add(5);
-		l.add(12);
-		l.add(3);
-		l.add(7);
-		l.add(4);
-		l.add(23);
-		l.add(3);
-		l.add(-3);
-		l.add(24);
-		l.add(12);
-		l.add(56);
-		l.add(34);
-		l.add(35);
-		l.add(12);
-		//shellSort(l);
-		int[][] a = {{1,2,3},{4,5,6},{7,8,9}};
-		System.out.println(clockwiseRotatedMatrix(a));
-		
-		//NEED TO FIX SHELL, HEAP, AND QUICK SORTS
-		//
-		//NEED TO FIX SHORTEST PATH METHOD
-	}
-
 	/*
 	 * Find whether there is an error or not after crc method given a word and a bias modulo 2 divisor.
 	 */
@@ -496,25 +470,38 @@ public class UsefulMethods {
 		l.set(l.indexOf(pivot), temp);
 		// ////////////
 	}
-
-	static void heapSort(List<Integer> l) {
-		int size = l.size();
+	
+	static List<Integer> heapify(List<Integer> l){
+		System.out.println(l);
 		int current = l.size();
-		int temp, i, left, right, bigger = 0;
+		int temp, i, left, right, bigger = 0, count = 0;
 		l.add(0, Integer.MIN_VALUE);
-		// heapify
 		int swapIndex = 0;
 		while (current > 1) {
-			right = l.get(current);
-			left = l.get(current - 1);
-			bigger = 0;
-			if (right >= left) {
-				bigger = right;
-				swapIndex = current;
-			} else {
+			System.out.println(current+":"+l);
+			if(current % 2 == 1){
+				right = l.get(current);
+				left = l.get(current - 1);
 				bigger = left;
 				swapIndex = current - 1;
+				if (right >= left) {
+					bigger = right;
+					swapIndex = current;
+				}
 			}
+			else{
+				left = l.get(current);
+				bigger = left;
+				swapIndex = current;
+				if(current+1 < l.size()){
+					right = l.get(current + 1);
+					if (right >= left) {
+						bigger = right;
+						swapIndex = current + 1;
+					}
+				}
+			}
+			
 			if (bigger > l.get(current / 2)) {
 				temp = l.get(current / 2);
 				l.set(current / 2, l.get(swapIndex));
@@ -524,14 +511,16 @@ public class UsefulMethods {
 				i = swapIndex * 2;
 				while (i < l.size()) {
 					left = l.get(i);
-					right = l.get(i + 1);
-					if (right >= left) {
-						bigger = right;
-						swapIndex = i + 1;
-					} else {
-						bigger = left;
-						swapIndex = i;
+					bigger = left;
+					swapIndex = i;
+					if(i + 1 < l.size()){
+						right = l.get(i + 1);
+						if (right >= left) {
+							bigger = right;
+							swapIndex = i + 1;
+						}
 					}
+					
 					if (bigger > l.get(swapIndex / 2)) {
 						temp = l.get(swapIndex / 2);
 						l.set(swapIndex / 2, l.get(swapIndex));
@@ -542,8 +531,19 @@ public class UsefulMethods {
 			}
 			current -= 2;
 		}
-		System.out.println(l);
+		System.out.println("heapify:"+l);
+		
+		return l;
+	}
 
+	static void heapSort(List<Integer> l) {
+		int current = l.size();
+		int temp, i, left, right, bigger = 0;
+		
+		// heapify
+		int swapIndex = 0;
+		l = heapify(l);
+		
 		// position
 		int maxIndex = l.size() - 1;
 		while (maxIndex > 1) {
@@ -554,21 +554,17 @@ public class UsefulMethods {
 			// adjust
 			current = 1;
 			i = current * 2;
-			System.out.println("maxIndex" + maxIndex);
-			while (i < maxIndex - 1) {
-				System.out.println(i);
+			while (i <= maxIndex - 1) {
 				left = l.get(i);
-				if (i + 1 < maxIndex - 1) {
+				bigger = left;
+				swapIndex = i;
+				if (i + 1 <= maxIndex - 1) {
 					right = l.get(i + 1);
 					if (right >= left) {
 						bigger = right;
 						swapIndex = i + 1;
-					} else {
-						bigger = left;
-						swapIndex = i;
 					}
 				}
-				System.out.println("bigger" + bigger);
 				if (bigger > l.get(swapIndex / 2)) {
 					temp = l.get(swapIndex / 2);
 					l.set(swapIndex / 2, l.get(swapIndex));
@@ -576,7 +572,7 @@ public class UsefulMethods {
 				}
 				i = swapIndex * 2;
 			}
-			System.out.println("out");
+			System.out.println("adjust:"+l);
 			maxIndex--;
 		}
 		l.remove(0);
@@ -619,7 +615,6 @@ public class UsefulMethods {
 		if (boo) {
 			l.add(forgotten);
 		}
-		;
 		insertionSort(l);
 		System.out.println(l);
 	}
@@ -816,4 +811,30 @@ public class UsefulMethods {
 		}
 		System.out.println();
 	}
+	
+	//=================MAIN METHOD==================\\
+		public static void main(String[] args) {
+			
+			List<Integer> l = new ArrayList<Integer>();
+			l.add(5);
+			l.add(12);
+			l.add(3);
+			l.add(7);
+			l.add(4);
+			l.add(23);
+			l.add(3);
+			l.add(-2);
+			l.add(24);
+			l.add(12);
+			l.add(56);
+			l.add(34);
+			l.add(35);
+			l.add(12);
+			heapSort(l);
+			
+			//NEED TO FIX SHELL AND QUICK SORTS
+			//
+			//NEED TO FIX SHORTEST PATH METHOD
+		}
+		//=================MAIN METHOD==================\\
 }
