@@ -16,7 +16,8 @@ import java.util.Stack;
 public class UsefulMethods {
 
 	/*
-	 * Find whether there is an error or not after crc method given a word and a bias modulo 2 divisor.
+	 * Find whether there is an error or not after crc method given a word and a
+	 * bias modulo 2 divisor.
 	 */
 	static boolean crcError(int word, int bias) {
 		if (Integer.parseInt(moduloTwoDivisionRemainder(word, bias)) != 0)
@@ -26,24 +27,27 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * Takes data bits and bias and returns sent word using modulo 2 division remainder.
-	 * This remainder is appended to the original data bits; the new expression is the sent word.
+	 * Takes data bits and bias and returns sent word using modulo 2 division
+	 * remainder. This remainder is appended to the original data bits; the new
+	 * expression is the sent word.
 	 */
 	static int crc(int data, int bias) {
 		int c = Integer.toString(bias).length();
 		String newData = Integer.toString(data);
-		
+
 		/*
-		 * Let n be the number of bits in 'bias', append n-1 '0' bits to the data before performing mod 2 division.
+		 * Let n be the number of bits in 'bias', append n-1 '0' bits to the
+		 * data before performing mod 2 division.
 		 */
 		for (int i = 0; i < c - 1; i++)
 			newData += "0";
 		int dividend = Integer.parseInt(newData);
-		
+
 		String remainder = moduloTwoDivisionRemainder(dividend, bias);
 
 		/*
-		 * Append obtained result after mod 2 division to original data bits, then return.
+		 * Append obtained result after mod 2 division to original data bits,
+		 * then return.
 		 */
 		String sentData = Integer.toString(data) + remainder;
 		int result = Integer.parseInt(sentData);
@@ -52,23 +56,24 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method performs mod 2 division.
-	 * First parameter it takes is the dividend; the second is the divisor.
+	 * This method performs mod 2 division. First parameter it takes is the
+	 * dividend; the second is the divisor.
 	 */
 	static String moduloTwoDivisionRemainder(int word, int bias) {
 		int biasLength = Integer.toString(bias).length();
 		int wordLength = Integer.toString(word).length();
 		String w = Integer.toString(word);
-		
+
 		/*
-		 * It would not make sense for the divisor to have more bits than the dividend.
+		 * It would not make sense for the divisor to have more bits than the
+		 * dividend.
 		 */
 		if (w.length() < biasLength) {
 			System.out.println("Invalid .. Bias cannot be longer than word.");
 			return null;
 		}
 
-		//RESUME COMMENTS FROM HERE
+		// RESUME COMMENTS FROM HERE
 		int counter = 0;
 		int co = 0;
 		ArrayList<Character> r = new ArrayList<Character>();
@@ -78,7 +83,6 @@ public class UsefulMethods {
 			co++;
 		}
 
-		
 		while (counter < wordLength - biasLength) {
 			ArrayList<Character> a = new ArrayList<Character>(r);
 			if (a.get(0) != '0') {
@@ -134,7 +138,8 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This is a method that will return the longest palindrome found within a given string.
+	 * This is a method that will return the longest palindrome found within a
+	 * given string.
 	 */
 	static void longestPalindrome(String s) {
 		String palindrome = "";
@@ -180,9 +185,9 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method will combine sorted arrays.
-	 * This means that it will take two sorted arrays; then it will combine and sort them.
-	 * It results in a longer, but still sorted array.
+	 * This method will combine sorted arrays. This means that it will take two
+	 * sorted arrays; then it will combine and sort them. It results in a
+	 * longer, but still sorted array.
 	 */
 	static int[] combineSortedArrays(int[] A, int[] B) {
 		int[] result = new int[A.length + B.length];
@@ -215,9 +220,9 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method will combine sorted lists.
-	 * This means that it will take two sorted lists; then it will combine and sort them.
-	 * It results in a longer, but still sorted list.
+	 * This method will combine sorted lists. This means that it will take two
+	 * sorted lists; then it will combine and sort them. It results in a longer,
+	 * but still sorted list.
 	 */
 	static ArrayList<Integer> combineSortedLists(List<Integer> A,
 			List<Integer> B) {
@@ -246,11 +251,8 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * Rotate a 2D matrix clockwise.
-	 * Example:
-	 * 		1	2	3		=>		7	4	1
-	 * 		4	5	6		=>		8	5	2
-	 * 		7	8	9		=>		9	6	3
+	 * Rotate a 2D matrix clockwise. Example: 1 2 3 => 7 4 1 4 5 6 => 8 5 2 7 8
+	 * 9 => 9 6 3
 	 */
 	static int[][] clockwiseRotatedMatrix(int[][] matrix) {
 		int size = matrix.length;
@@ -267,9 +269,10 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method determines how many combinations are possible given a total number of characters
-	 * and how many characters is wanted for each combination.
-	 * Combination is different from permutation in that different combinations cannot comprise of only the same characters.
+	 * This method determines how many combinations are possible given a total
+	 * number of characters and how many characters is wanted for each
+	 * combination. Combination is different from permutation in that different
+	 * combinations cannot comprise of only the same characters.
 	 */
 	static int numCombinations(String s, int r) {
 		int num = 0;
@@ -280,10 +283,11 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method determines how many permutations are possible given a total number of characters
-	 * and how many characters is wanted for each permutation.
-	 * Permutation is different from combination in that different permutations can comprise of the same characters
-	 * which are not in the same order.
+	 * This method determines how many permutations are possible given a total
+	 * number of characters and how many characters is wanted for each
+	 * permutation. Permutation is different from combination in that different
+	 * permutations can comprise of the same characters which are not in the
+	 * same order.
 	 */
 	static int numPermutations(String s, int r) {
 		int num = 0;
@@ -294,7 +298,8 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method determines the greatest common denominator between two numbers.
+	 * This method determines the greatest common denominator between two
+	 * numbers.
 	 */
 	static int gcd(int a, int b) {
 		while (b != 0) {
@@ -331,7 +336,8 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * The following method checks whether or not a given number is a prime number.
+	 * The following method checks whether or not a given number is a prime
+	 * number.
 	 */
 	static void primeValidity(int n) {
 		boolean valid = true;
@@ -351,8 +357,9 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method checks for the validity of a given string.
-	 * It checks whther or not the parentheses and brackets come in pairs and are at the right place.
+	 * This method checks for the validity of a given string. It checks whther
+	 * or not the parentheses and brackets come in pairs and are at the right
+	 * place.
 	 */
 	static void expressionValidity(String s) {
 		Stack<Character> stack = new Stack<Character>();
@@ -387,7 +394,8 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method will output Pascal's Triangle up to the nth line (n is provided).
+	 * This method will output Pascal's Triangle up to the nth line (n is
+	 * provided).
 	 */
 	static void pascalsTriangle(int n) {
 		int[][] a = new int[n][n];
@@ -403,7 +411,8 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method merges two lists; it simply uses the method to merge lists above.
+	 * This method merges two lists; it simply uses the method to merge lists
+	 * above.
 	 */
 	static ArrayList<Integer> merge(List<Integer> a, List<Integer> b) {
 		return combineSortedLists(a, b);
@@ -424,9 +433,10 @@ public class UsefulMethods {
 			return result;
 		}
 	}
-	
+
 	/*
-	 * Find the median of three of an array, the three numbers being the ones at first, middle, and last indices of the array.
+	 * Find the median of three of an array, the three numbers being the ones at
+	 * first, middle, and last indices of the array.
 	 */
 	static int medianOfThree(int a[], int f, int l) {
 		int m = (f + l) / 2;
@@ -443,9 +453,10 @@ public class UsefulMethods {
 		}
 		return a[l];
 	}
-	
+
 	/*
-	 * Find the median of three of a list, the three numbers being the ones at first, middle, and last indices of the list.
+	 * Find the median of three of a list, the three numbers being the ones at
+	 * first, middle, and last indices of the list.
 	 */
 	static int medianOfThree(List<Integer> list, int f, int l) {
 		int m = (f + l) / 2;
@@ -470,16 +481,14 @@ public class UsefulMethods {
 		l.set(l.indexOf(pivot), temp);
 		// ////////////
 	}
-	
-	static List<Integer> heapify(List<Integer> l){
-		System.out.println(l);
+
+	static List<Integer> heapify(List<Integer> l) {
 		int current = l.size();
-		int temp, i, left, right, bigger = 0, count = 0;
+		int temp, i, left, right, bigger = 0;
 		l.add(0, Integer.MIN_VALUE);
 		int swapIndex = 0;
 		while (current > 1) {
-			System.out.println(current+":"+l);
-			if(current % 2 == 1){
+			if (current % 2 == 1) {
 				right = l.get(current);
 				left = l.get(current - 1);
 				bigger = left;
@@ -488,12 +497,11 @@ public class UsefulMethods {
 					bigger = right;
 					swapIndex = current;
 				}
-			}
-			else{
+			} else {
 				left = l.get(current);
 				bigger = left;
 				swapIndex = current;
-				if(current+1 < l.size()){
+				if (current + 1 < l.size()) {
 					right = l.get(current + 1);
 					if (right >= left) {
 						bigger = right;
@@ -501,7 +509,7 @@ public class UsefulMethods {
 					}
 				}
 			}
-			
+
 			if (bigger > l.get(current / 2)) {
 				temp = l.get(current / 2);
 				l.set(current / 2, l.get(swapIndex));
@@ -513,14 +521,14 @@ public class UsefulMethods {
 					left = l.get(i);
 					bigger = left;
 					swapIndex = i;
-					if(i + 1 < l.size()){
+					if (i + 1 < l.size()) {
 						right = l.get(i + 1);
 						if (right >= left) {
 							bigger = right;
 							swapIndex = i + 1;
 						}
 					}
-					
+
 					if (bigger > l.get(swapIndex / 2)) {
 						temp = l.get(swapIndex / 2);
 						l.set(swapIndex / 2, l.get(swapIndex));
@@ -531,19 +539,18 @@ public class UsefulMethods {
 			}
 			current -= 2;
 		}
-		System.out.println("heapify:"+l);
-		
+
 		return l;
 	}
 
 	static void heapSort(List<Integer> l) {
 		int current = l.size();
 		int temp, i, left, right, bigger = 0;
-		
+
 		// heapify
 		int swapIndex = 0;
 		l = heapify(l);
-		
+
 		// position
 		int maxIndex = l.size() - 1;
 		while (maxIndex > 1) {
@@ -572,30 +579,33 @@ public class UsefulMethods {
 				}
 				i = swapIndex * 2;
 			}
-			System.out.println("adjust:"+l);
 			maxIndex--;
 		}
 		l.remove(0);
 		System.out.println(l);
 	}
 
+	/*
+	 * Sort list using shell sort.
+	 */
 	static void shellSort(List<Integer> l) {
-		int count = 1;
+		System.out.println(l);
+		int n = l.size();
+		int count = 0;
 		int c = 0;
-		int k = l.size() / 2;
-		int forgotten = -1;
-		boolean boo = false;
-		if (l.size() % 2 == 1) {
-			forgotten = l.get(l.size() - 1);
-			boo = true;
-		}
-		int numRepeats = (int) (Math.log(l.size()) / Math.log(2));
+		int k = (n % 2 == 0) ? n / 2 : n / 2 + 1;
+		int numRepeats = (int) (Math.log(n) / Math.log(2));
 		while (count < numRepeats) {
-			System.out.println(k);
-			Integer[][] colArrays = new Integer[k][l.size() / k];
+			System.out.println("k:" + k);
+			Integer[][] colArrays = new Integer[k][(n % k == 0) ? n / k : n / k
+					+ 1];
 			for (int i = 0; i < k; i++) {
 				for (int j = 0; j < colArrays[i].length; j++) {
-					colArrays[i][j] = l.get(i + c);
+					if (i + c < n) {
+						colArrays[i][j] = l.get(i + c);
+					} else {
+						colArrays[i][j] = Integer.MAX_VALUE;
+					}
 					c += k;
 				}
 				c = 0;
@@ -608,12 +618,12 @@ public class UsefulMethods {
 					l.add(b);
 				}
 			}
-			k = (int) Math.ceil(k / 2);
+			k = (k % 2 == 0) ? k / 2 : k / 2 + 1;
 			count++;
-			System.out.println(l);
-		}
-		if (boo) {
-			l.add(forgotten);
+			System.out.println("sorted:" + l);
+			while (l.contains(Integer.MAX_VALUE))
+				l.remove(l.indexOf(Integer.MAX_VALUE));
+			System.out.println("sorted:" + l);
 		}
 		insertionSort(l);
 		System.out.println(l);
@@ -768,8 +778,8 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * This method will sum powers of 2 up to the nth power
-	 * Example: n = 2 => 2^0 + 2^1 + 2^2
+	 * This method will sum powers of 2 up to the nth power Example: n = 2 =>
+	 * 2^0 + 2^1 + 2^2
 	 */
 	static int sumPowersOf2(int n) {
 		int x = 1;
@@ -811,30 +821,30 @@ public class UsefulMethods {
 		}
 		System.out.println();
 	}
-	
-	//=================MAIN METHOD==================\\
-		public static void main(String[] args) {
-			
-			List<Integer> l = new ArrayList<Integer>();
-			l.add(5);
-			l.add(12);
-			l.add(3);
-			l.add(7);
-			l.add(4);
-			l.add(23);
-			l.add(3);
-			l.add(-2);
-			l.add(24);
-			l.add(12);
-			l.add(56);
-			l.add(34);
-			l.add(35);
-			l.add(12);
-			heapSort(l);
-			
-			//NEED TO FIX SHELL AND QUICK SORTS
-			//
-			//NEED TO FIX SHORTEST PATH METHOD
-		}
-		//=================MAIN METHOD==================\\
+
+	// =================MAIN METHOD==================\\
+	public static void main(String[] args) {
+
+		List<Integer> l = new ArrayList<Integer>();
+		l.add(5);
+		l.add(12);
+		l.add(3);
+		l.add(7);
+		l.add(4);
+		l.add(23);
+		l.add(3);
+		l.add(-2);
+		l.add(24);
+		l.add(12);
+		l.add(56);
+		l.add(34);
+		l.add(35);
+		l.add(12);
+		shellSort(l);
+
+		// NEED TO FIX QUICK SORT
+		//
+		// NEED TO FIX SHORTEST PATH METHOD
+	}
+	// =================MAIN METHOD==================\\
 }
