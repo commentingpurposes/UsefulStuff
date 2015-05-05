@@ -474,12 +474,56 @@ public class UsefulMethods {
 		return list.get(l);
 	}
 
-	static void quickSort(List<Integer> l) {
-		int pivot = medianOfThree(l, 0, l.size());
-		int temp = l.get(0);
-		l.set(0, pivot);
-		l.set(l.indexOf(pivot), temp);
-		// ////////////
+	static int partition(List<Integer> l, int low, int high) {
+		int pivotI = low;
+		int pivot = l.get(pivotI);
+		int temp = l.get(low);
+		l.set(low, pivot);
+		l.set(pivotI, temp);
+		int partitionI = low;
+		low++;
+		while (low <= high) {
+			if (l.get(low) >= pivot) {
+				if (l.get(high) <= pivot) {
+					temp = l.get(high);
+					l.set(high, l.get(low));
+					l.set(low, temp);
+					low++;
+				}
+				high--;
+			} else if (l.get(high) <= pivot) {
+				low++;
+			} else {
+				low++;
+				high--;
+			}
+		}
+		if (low == high) {
+			if (l.get(low - 1) <= pivot) {
+				temp = l.get(low);
+			} else {
+				temp = l.get(low - 1);
+			}
+		} else {
+			temp = l.get(high);
+		}
+		l.set(high, l.get(partitionI));
+		l.set(partitionI, temp);
+
+		return high;
+	}
+
+	/*
+	 * Sort list using quick sort.
+	 */
+	static List<Integer> quickSort(List<Integer> l, int low, int high) {
+		if (low < high) {
+			int p = partition(l, low, high);
+			quickSort(l, low, p - 1);
+			quickSort(l, p + 1, high);
+		}
+
+		return l;
 	}
 
 	static List<Integer> heapify(List<Integer> l) {
@@ -543,7 +587,7 @@ public class UsefulMethods {
 		return l;
 	}
 
-	static void heapSort(List<Integer> l) {
+	static List<Integer> heapSort(List<Integer> l) {
 		int current = l.size();
 		int temp, i, left, right, bigger = 0;
 
@@ -583,12 +627,14 @@ public class UsefulMethods {
 		}
 		l.remove(0);
 		System.out.println(l);
+
+		return l;
 	}
 
 	/*
 	 * Sort list using shell sort.
 	 */
-	static void shellSort(List<Integer> l) {
+	static List<Integer> shellSort(List<Integer> l) {
 		System.out.println(l);
 		int n = l.size();
 		int count = 0;
@@ -627,12 +673,14 @@ public class UsefulMethods {
 		}
 		insertionSort(l);
 		System.out.println(l);
+
+		return l;
 	}
 
 	/*
 	 * Sort list using bubble sort.
 	 */
-	static void bubbleSort(List<Integer> l) {
+	static List<Integer> bubbleSort(List<Integer> l) {
 		boolean swapped = true;
 		for (int i = l.size() - 1; swapped && i >= 1; i--) {
 			swapped = false;
@@ -645,12 +693,14 @@ public class UsefulMethods {
 				}
 			}
 		}
+
+		return l;
 	}
 
 	/*
 	 * Sort list using insertion sort.
 	 */
-	static void insertionSort(List<Integer> l) {
+	static List<Integer> insertionSort(List<Integer> l) {
 		for (int i = 1; i < l.size(); i++) {
 			int j = i;
 			while (j > 0 && l.get(j - 1) > l.get(j)) {
@@ -660,12 +710,14 @@ public class UsefulMethods {
 				j--;
 			}
 		}
+
+		return l;
 	}
 
 	/*
 	 * Sort list using selection sort.
 	 */
-	static void selectionSort(List<Integer> l) {
+	static List<Integer> selectionSort(List<Integer> l) {
 		for (int i = 0; i < l.size() - 1; i++) {
 			int min = i;
 			for (int j = i; j < l.size(); j++) {
@@ -677,12 +729,14 @@ public class UsefulMethods {
 			l.set(i, l.get(min));
 			l.set(min, temp);
 		}
+
+		return l;
 	}
 
 	/*
 	 * Sort list using bucket sort.
 	 */
-	static void bucketSort(List<Integer> l) {
+	static List<Integer> bucketSort(List<Integer> l) {
 		int max = Collections.max(l);
 		int[] arr = new int[max + 1];
 		int[] counters = new int[max + 1];
@@ -698,6 +752,8 @@ public class UsefulMethods {
 			}
 		}
 		l = newList;
+
+		return l;
 	}
 
 	/*
@@ -840,9 +896,10 @@ public class UsefulMethods {
 		l.add(34);
 		l.add(35);
 		l.add(12);
-		shellSort(l);
+		System.out.println(l);
+		System.out.println(quickSort(l, 0, l.size() - 1));
 
-		// NEED TO FIX QUICK SORT
+		// NEED TO FIX MedianOfThree pivot choosing method
 		//
 		// NEED TO FIX SHORTEST PATH METHOD
 	}
