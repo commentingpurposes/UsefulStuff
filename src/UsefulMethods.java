@@ -125,18 +125,6 @@ public class UsefulMethods {
 		}
 	}
 
-	static void getShortestPath(int[][] matrix, int idx1, int idx2,
-			int destination) {
-		int shortest = 0;
-		if (matrix[idx1][idx2] != 0) {
-			shortest += matrix[idx1][idx2];
-			while (idx2 != destination) {
-				// get unvisited adjacent nodes
-
-			}
-		}
-	}
-
 	/*
 	 * This is a method that will return the longest palindrome found within a
 	 * given string.
@@ -526,7 +514,7 @@ public class UsefulMethods {
 		return l;
 	}
 
-	static List<Integer> heapify(List<Integer> l) {
+	static List<Integer> maxHeapify(List<Integer> l) {
 		int current = l.size();
 		int temp, i, left, right, bigger = 0;
 		l.add(0, Integer.MIN_VALUE);
@@ -591,9 +579,9 @@ public class UsefulMethods {
 		int current = l.size();
 		int temp, i, left, right, bigger = 0;
 
-		// heapify
+		// max heapify
 		int swapIndex = 0;
-		l = heapify(l);
+		l = maxHeapify(l);
 
 		// position
 		int maxIndex = l.size() - 1;
@@ -881,27 +869,6 @@ public class UsefulMethods {
 	// =================MAIN METHOD==================\\
 	public static void main(String[] args) {
 
-		List<Integer> l = new ArrayList<Integer>();
-		l.add(5);
-		l.add(12);
-		l.add(3);
-		l.add(7);
-		l.add(4);
-		l.add(23);
-		l.add(3);
-		l.add(-2);
-		l.add(24);
-		l.add(12);
-		l.add(56);
-		l.add(34);
-		l.add(35);
-		l.add(12);
-		System.out.println(l);
-		System.out.println(quickSort(l, 0, l.size() - 1));
-
-		// NEED TO FIX MedianOfThree pivot choosing method
-		//
-		// NEED TO FIX SHORTEST PATH METHOD
 	}
 	// =================MAIN METHOD==================\\
 }
