@@ -73,7 +73,6 @@ public class UsefulMethods {
 			return null;
 		}
 
-		// RESUME COMMENTS FROM HERE
 		int counter = 0;
 		int co = 0;
 		ArrayList<Character> r = new ArrayList<Character>();
@@ -83,6 +82,13 @@ public class UsefulMethods {
 			co++;
 		}
 
+		/*
+		 * Get remainder after each binary mod 2 addition (no carry); each digit is an element of a list (r in this case).
+		 * > 0 + 0 = 0
+		 * > 0 + 1 = 0
+		 * > 1 + 0 = 0
+		 * > 1 + 1 = 0
+		 */
 		while (counter < wordLength - biasLength) {
 			ArrayList<Character> a = new ArrayList<Character>(r);
 			if (a.get(0) != '0') {
@@ -108,21 +114,6 @@ public class UsefulMethods {
 
 		return remainder;
 
-	}
-
-	static void shortestPath(int x, int y) throws FileNotFoundException {
-		File file = new File("adjacency_matrix.txt");
-		Scanner scan = new Scanner(file);
-
-		int numNodes = scan.nextInt();
-		int[][] adjMatrix = new int[numNodes][numNodes];
-		while (scan.hasNextLine()) {
-			int start = scan.nextInt();
-			int end = scan.nextInt();
-			int weight = scan.nextInt();
-			adjMatrix[start][end] = weight;
-			adjMatrix[start][end] = weight;
-		}
 	}
 
 	/*
@@ -407,7 +398,7 @@ public class UsefulMethods {
 	}
 
 	/*
-	 * Sotr list using merge sort.
+	 * Sort list using merge sort.
 	 */
 	static List<Integer> mergeSort(List<Integer> l) {
 		if (l.size() == 1) {
@@ -462,6 +453,9 @@ public class UsefulMethods {
 		return list.get(l);
 	}
 
+	/*
+	 * Partition a list, given starting and ending indices.
+	 */
 	static int partition(List<Integer> l, int low, int high) {
 		int pivotI = low;
 		int pivot = l.get(pivotI);
@@ -514,6 +508,9 @@ public class UsefulMethods {
 		return l;
 	}
 
+	/*
+	 * Turn a list to a max heap.
+	 */
 	static List<Integer> maxHeapify(List<Integer> l) {
 		int current = l.size();
 		int temp, i, left, right, bigger = 0;
@@ -575,6 +572,9 @@ public class UsefulMethods {
 		return l;
 	}
 
+	/*
+	 * Sort list using heap sort.
+	 */
 	static List<Integer> heapSort(List<Integer> l) {
 		int current = l.size();
 		int temp, i, left, right, bigger = 0;
