@@ -4,13 +4,10 @@
  * Feel free to suggest and/or add more methods if you think they can be useful.
  */
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Stack;
 
 public class UsefulMethods {
@@ -135,7 +132,7 @@ public class UsefulMethods {
 			while (i - c >= 0 && i + j - 1 < s.length()) {
 				if (i + j + 1 < s.length()
 						&& isPalindrome(s.substring(i - c, i + j + 1))
-						&& c + j + 2 >= palindrome.length()) {
+						&& c + j + 1 >= palindrome.length()) {
 					palindrome = s.substring(i - c, i + j + 1);
 				} else if (isPalindrome(s.substring(i - c))
 						&& c + j + 2 >= palindrome.length()) {
@@ -380,7 +377,7 @@ public class UsefulMethods {
 		int[][] a = new int[n][n];
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j <= i; j++) {
-				if (j == 0 || j == n)
+				if (j == 0 || j == i)
 					a[i][j] = 1;
 				else
 					a[i][j] = a[i - 1][j - 1] + a[i - 1][j];
