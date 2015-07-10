@@ -120,27 +120,35 @@ public class UsefulMethods {
 	static void longestPalindrome(String s) {
 		String palindrome = "";
 		for (int i = 0; i < s.length(); i++) {
-			System.out.println(i);
 			int j = 1;
+			
+            //check whether the next characters are similar to the current one
 			while (i + j < s.length() && s.charAt(i + j) == s.charAt(i)) {
+				
+                //only replace palindrome if the length of trailing similar characters is greater than current longest palindrome
 				if (j + 1 >= palindrome.length()) {
 					palindrome = s.substring(i, i + j + 1);
 				}
+				
+                //increment j to check next character
 				j++;
 			}
-			int c = 1;
-			while (i - c >= 0 && i + j - 1 < s.length()) {
-				if (i + j + 1 < s.length()
-						&& isPalindrome(s.substring(i - c, i + j + 1))
-						&& c + j + 1 >= palindrome.length()) {
-					palindrome = s.substring(i - c, i + j + 1);
-				} else if (isPalindrome(s.substring(i - c))
-						&& c + j + 2 >= palindrome.length()) {
-					palindrome = s.substring(i - c, i + j + 1);
-				}
-				c++;
-				j++;
+			
+			//counter for left and right symmetry from current char (or substring if similar trailing characters)
+			int symmetryCounter = 1;
+			
+			//substring which will be checked for palindromicity
+			String palindromer = (i + j + symmetryCounter < s.length()) ? s.substring(i - symmetryCounter, i + j + symmetryCounter) : s.substring(i - symmetryCounter);
+			
+			//make sure to stay within the bounds of the given string's length and check palindromicity
+			while ((i - symmetryCounter >= 0) && (i + j - 1 + symmetryCounter < s.length()) && isPalindrome(palindromer)) {
+				palindrome = (palindromer.length() >= palindrome.length()) ? palindromer : palindrome;
+				symmetryCounter++;
+				palindromer = (i + j + symmetryCounter < s.length())? s.substring(i - symmetryCounter, i + j + symmetryCounter) : s.substring(i - symmetryCounter);
 			}
+			
+			//increment i by number of similar trailing characaters + 1
+			i += j;
 		}
 		System.out.println("The longest palindrome within the given word (" + s
 				+ ") is: " + palindrome + ".");
@@ -150,14 +158,11 @@ public class UsefulMethods {
 	 * Find whether or not a given string is a palindrome.
 	 */
 	public static boolean isPalindrome(String s) {
-		boolean result = false;
 		String r = "";
 		for (int i = s.length() - 1; i >= 0; i--) {
 			r += s.charAt(i);
 		}
-		if (s.equals(r))
-			result = true;
-		return result;
+		return s.equals(r);
 	}
 
 	/*
