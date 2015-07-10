@@ -80,11 +80,9 @@ public class UsefulMethods {
 		}
 
 		/*
-		 * Get remainder after each binary mod 2 addition (no carry); each digit is an element of a list (r in this case).
-		 * > 0 + 0 = 0
-		 * > 0 + 1 = 0
-		 * > 1 + 0 = 0
-		 * > 1 + 1 = 0
+		 * Get remainder after each binary mod 2 addition (no carry); each digit
+		 * is an element of a list (r in this case). > 0 + 0 = 0 > 0 + 1 = 0 > 1
+		 * + 0 = 0 > 1 + 1 = 0
 		 */
 		while (counter < wordLength - biasLength) {
 			ArrayList<Character> a = new ArrayList<Character>(r);
@@ -121,33 +119,43 @@ public class UsefulMethods {
 		String palindrome = "";
 		for (int i = 0; i < s.length(); i++) {
 			int j = 1;
-			
-            //check whether the next characters are similar to the current one
+
+			// check whether the next characters are similar to the current one
 			while (i + j < s.length() && s.charAt(i + j) == s.charAt(i)) {
-				
-                //only replace palindrome if the length of trailing similar characters is greater than current longest palindrome
+
+				// only replace palindrome if the length of trailing similar
+				// characters is greater than current longest palindrome
 				if (j + 1 >= palindrome.length()) {
 					palindrome = s.substring(i, i + j + 1);
 				}
-				
-                //increment j to check next character
+
+				// increment j to check next character
 				j++;
 			}
-			
-			//counter for left and right symmetry from current char (or substring if similar trailing characters)
+
+			// counter for left and right symmetry from current char (or
+			// substring if similar trailing characters)
 			int symmetryCounter = 1;
-			
-			//substring which will be checked for palindromicity
-			String palindromer = (i + j + symmetryCounter < s.length()) ? s.substring(i - symmetryCounter, i + j + symmetryCounter) : s.substring(i - symmetryCounter);
-			
-			//make sure to stay within the bounds of the given string's length and check palindromicity
-			while ((i - symmetryCounter >= 0) && (i + j - 1 + symmetryCounter < s.length()) && isPalindrome(palindromer)) {
-				palindrome = (palindromer.length() >= palindrome.length()) ? palindromer : palindrome;
+
+			// substring which will be checked for palindromicity
+			String palindromer = (i + j + symmetryCounter < s.length()) ? s
+					.substring(i - symmetryCounter, i + j + symmetryCounter)
+					: s.substring(i - symmetryCounter);
+
+			// make sure to stay within the bounds of the given string's length
+			// and check palindromicity
+			while ((i - symmetryCounter >= 0)
+					&& (i + j - 1 + symmetryCounter < s.length())
+					&& isPalindrome(palindromer)) {
+				palindrome = (palindromer.length() >= palindrome.length()) ? palindromer
+						: palindrome;
 				symmetryCounter++;
-				palindromer = (i + j + symmetryCounter < s.length())? s.substring(i - symmetryCounter, i + j + symmetryCounter) : s.substring(i - symmetryCounter);
+				palindromer = (i + j + symmetryCounter < s.length()) ? s
+						.substring(i - symmetryCounter, i + j + symmetryCounter)
+						: s.substring(i - symmetryCounter);
 			}
-			
-			//increment i by number of similar trailing characaters + 1
+
+			// increment i by number of similar trailing characaters + 1
 			i += j;
 		}
 		System.out.println("The longest palindrome within the given word (" + s
